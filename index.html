@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <head>
+      <title>Paint Splatter</title>
+   </head>
+   
+   <body>
+      <div class="bottombar">
+         <button class="startbtn" onclick="startPro()" style="margin: 0;">Start</button>
+         <button class="startbtn" onclick="clearPro()">Clear</button>
+         <p>Size: (<span id="sizes">100</span>)</p>
+         <input type="range" min="1" max="1000" value="100" class="slider" id="sizemodifer">
+         <p>Splats: (<span id="cycles">100</span>)</p>
+         <input type="range" min="1" max="1000" value="100" class="slider" id="dotsmodifer">
+      </div>
+      
+      <div class="wall" id="wall">
+      </div>
+   </body>
+   
+   <style>
+      .bottombar {
+         width: 100%;
+         height: 7%;
+         position: fixed;
+         bottom: 0;
+         left: 0;
+         background-color: gray;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+      }
+      
+      .startbtn {
+         width: 8%;
+         height: 60%;
+         background-color: white;
+         margin-left: 2%;
+         margin-right: 2%;
+         border: 0.25vw black solid;
+         border-radius: 10000px;
+         cursor: pointer;
+      }
+      .startbtn:active {
+         border: 0.25vw red solid;
+      }
+      
+      .splat {
+         border-radius: 100000px;
+         position: fixed;
+      }
+      
+      .wall {
+         width: 100%;
+         height: 93%;
+         position: fixed;
+         top: 0;
+         left: 0;
+         z-index: -1;
+      }
+      
+      
+      .slider {
+        -webkit-appearance: none;
+        width: 10%;
+        height: 30%;
+        background: blue;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+        border-radius: 10000px;
+        margin-right: 2%;
+      }
+
+      .slider:hover {
+        opacity: 1;
+      }
+
+      .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        background: red;
+        cursor: pointer;
+        border-radius: 10000px;
+      }
+
+      .slider::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        background: red;
+        cursor: pointer;
+        border-radius: 10000px;
+      }
+   </style>
+   
+   <script>
+      var wall = ''
+      
+      var sizemod = 100
+      var cyclemod = 100
+      
+      
+      var sizemodifer = document.getElementById("sizemodifer");
+      var dotsmodifer = document.getElementById("dotsmodifer");
+
+      sizemodifer.oninput = function() {sizemod = this.value; document.getElementById("sizes").innerHTML = this.value;}
+      dotsmodifer.oninput = function() {cyclemod = this.value; document.getElementById("cycles").innerHTML = this.value;}
+      
+      
+      function startPro() {
+         var cycles = 0
+         
+         while (cycles != cyclemod) {
+            var r = 0
+            var g = 0
+            var b = 0
+
+            var x = 0
+            var y = 0
+
+            var size = 0
+
+            r = Math.floor(Math.random() * 255) + 1;
+            g = Math.floor(Math.random() * 255) + 1;
+            b = Math.floor(Math.random() * 255) + 1;
+
+            x = Math.random() * 106 - 5;
+            y = Math.random() * 106 - 5;
+
+            size = Math.random() * sizemod + 5;
+
+            wall = wall + '<div class="splat" style="background-color: rgb('+r+', '+g+', '+b+'); width: '+size+'px; height: '+size+'px; top: '+y+'%; left: '+x+'%;"></div>'
+            document.getElementById("wall").innerHTML = wall;
+            
+            cycles++;
+         }
+      }
+      
+      function clearPro() {wall = ''; document.getElementById("wall").innerHTML = wall;}
+   </script>
+</html>
